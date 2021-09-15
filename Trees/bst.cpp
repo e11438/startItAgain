@@ -2,20 +2,20 @@
 
 using namespace std;
 
-class Node{
+
+class BSTree
+{
+    class Node{
     public:
         int val;
         int height;
-        int bf;
         Node * left;
         Node * right;
 
-        Node(int val):val(val),left(NULL),right(NULL), height(0), bf(0) { }
+        Node(int val):val(val),left(NULL),right(NULL), height(0){ }
 
 };
 
-class Tree
-{
         Node * root;
         int size;
         bool insertSuccess;
@@ -43,25 +43,6 @@ class Tree
             return root;
         }
 
-        Node* leftLeftCase(Node* n)
-        {
-            return rightRotation(n);
-        }
-        Node* leftRightCase(Node* n)
-        {
-            n->left = leftRotation(n->left);
-            return rightRotation(n);
-        }
-        Node* rightRightCase(Node* n)
-        {
-            return leftRotation(n);
-        }
-        Node* rightLeftCase(Node* n)
-        {
-            n->right = rightRotation(n->right);
-            return leftRotation(n);
-        }
-
         void update(Node * n)
         {
             int hl = -1;
@@ -71,25 +52,6 @@ class Tree
             if(n->right) hr = n->right->height;
 
             n->height = max(hl, hr) + 1;
-            n->bf = hr - hl;
-        }
-        Node* balance(Node* n)
-        {
-            if(n->bf < -1) //left heavy
-            {
-                if(n->left->bf < 0)
-                    return leftLeftCase(n);
-                else
-                    return leftRightCase(n); 
-            }
-            else if(n->bf > 1)  //right heavy
-            {
-                if(n->right->bf > 0)
-                    return rightRightCase(n);
-                else
-                    return rightLeftCase(n);
-            }
-            return n;
         }
 
         Node * insert(int v, Node * n)
@@ -111,11 +73,7 @@ class Tree
             {
                 n->right = insert(v, n->right);
             }
-
-            //update bf and height of node after inserting
             update(n);
-            n = balance(n);
-
             return n;
         }
 
@@ -127,8 +85,8 @@ class Tree
             if(n->right)    preOrder(n->right);
         }
     public:
-        Tree():root(NULL), size(0),insertSuccess(false){};
-        Tree(int val):root(new Node(val) ), size(1) {};
+        BSTree():root(NULL), size(0),insertSuccess(false){};
+        BSTree(int val):root(new Node(val) ), size(1) {};
         int insert(int val)
         {
             insertSuccess = false;
@@ -153,7 +111,7 @@ int main()
     //Node n(3);
     //cout << n.val<< endl;
 
-    Tree t;
+    BSTree t;
     t.insert(5);
     t.insert(3);
     t.insert(6);

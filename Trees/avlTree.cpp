@@ -2,6 +2,9 @@
 
 using namespace std;
 
+class AVLTree
+{
+
 class Node{
     public:
         int val;
@@ -14,8 +17,6 @@ class Node{
 
 };
 
-class Tree
-{
         Node * root;
         int size;
         bool insertSuccess;
@@ -127,8 +128,8 @@ class Tree
             if(n->right)    preOrder(n->right);
         }
     public:
-        Tree():root(NULL), size(0),insertSuccess(false){};
-        Tree(int val):root(new Node(val) ), size(1) {};
+        AVLTree():root(NULL), size(0),insertSuccess(false){};
+        AVLTree(int val):root(new Node(val) ), size(1) {};
         int insert(int val)
         {
             insertSuccess = false;
@@ -153,7 +154,7 @@ int main()
     //Node n(3);
     //cout << n.val<< endl;
 
-    Tree t;
+    AVLTree t;
     t.insert(5);
     t.insert(3);
     t.insert(6);
