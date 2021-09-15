@@ -77,6 +77,59 @@ class BSTree
             return n;
         }
 
+        Node * getMin(Node * n)
+        {
+
+            while(n->left)
+            {
+                n = n->left;
+            }
+            return n;
+            
+        }
+        
+        Node* remove(int val, Node * n)
+        {
+            if(!n)  return n;
+            if(n->val < val) // if value is lager remove in right subtree
+            {
+                n->right = remove(val, n->right);
+            }
+            else if(n->val > val) // if value is smaller remove in left sub tree
+            {
+                n->left = remove(val, n->left);
+            }
+            else    // if value matches
+            {
+                if(!(n->left) && !(n->right))   // leaf node
+                {
+                    delete n;
+                    return NULL;
+                }
+                else if(!(n->left)) // only right subtree exist
+                {
+                    Node* node = n->right;
+                    delete n;
+                    return node;
+
+                }
+                else if(!(n->right)) // only left subtree exist
+                {
+                    Node* node = n->left;
+                    delete n;
+                    return node;
+                }
+                else{   // both subtrees exist
+                    int min = getMin(n->right)->val;
+                    n->val = min;
+                    n->right = remove(min, n->right);
+                    
+                }
+            }
+
+            return n;
+        }
+
         void preOrder(Node * n)
         {
             if(!n) return;
@@ -102,6 +155,11 @@ class BSTree
 
         int getHeight() {return root->height;}
 
+        void remove(int val)
+        {
+            root = remove(val, root);
+        }
+
 };
 
 
@@ -120,6 +178,11 @@ int main()
     t.insert(9);
     cout << "tree size - " << t.getSize() << " and height is " << t.getHeight() << endl;
     t.preOrder();
+
+    t.remove(5);
+    cout << "after removing 5" << endl;
+
+    t.preOrder(); 
 
     return 0;
 }
