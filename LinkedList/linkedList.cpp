@@ -54,7 +54,8 @@ class LinkedList
                     if(prev) prev->next = nextNode;
                     else head = nextNode;
 
-                    delete tmp;           
+                    delete tmp;  
+                    size--;         
                     tmp = nextNode;     
                 }
                 else{
